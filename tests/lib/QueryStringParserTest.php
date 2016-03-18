@@ -3,26 +3,16 @@ namespace Kutjera\Tests;
 
 use InvalidArgumentException;
 use Kutjera\DataQueryInterface;
-use Kutjera\Entity\ParsedQuery;
 use Kutjera\QueryStringParser;
 use PHPUnit_Framework_TestCase;
 
 class QueryStringParserTest extends PHPUnit_Framework_TestCase
 {
-    public function testConstructor()
-    {
-        $parser = new QueryStringParser();
-
-        $this->assertEquals('', $parser->getQueryString());
-        $this->assertEquals('filter', $parser->getFiltersKey());
-        $this->assertEquals('sort', $parser->getSortingKey());
-    }
-
 
     public function testParseReturnsDataQueryInstance()
     {
         $parser = new QueryStringParser();
-        $dataQuery = $parser->parse();
+        $dataQuery = $parser->parse('');
 
         $this->assertTrue($dataQuery instanceof DataQueryInterface);
     }
@@ -33,14 +23,14 @@ class QueryStringParserTest extends PHPUnit_Framework_TestCase
      */
     public function testParse($queryString, $filtersKey, $sortingKey, $expected)
     {
-        $parser = new QueryStringParser($queryString, $filtersKey, $sortingKey);
+        $parser = new QueryStringParser();
 
         if ($expected['type'] == 'exception') {
             $this->expectException($expected['exception']);
-            $parser->parse();
+            $parser->parse($queryString, $filtersKey, $sortingKey);
 
         } else {
-            $dataQuery = $parser->parse();
+            $dataQuery = $parser->parse($queryString, $filtersKey, $sortingKey);
 
             $resultFilters = $dataQuery->getFilters();
             $resultSorting = $dataQuery->getSorting();
@@ -69,7 +59,8 @@ class QueryStringParserTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidQueryStringType($queryString)
     {
-        $parser = new QueryStringParser($queryString);
+        $parser = new QueryStringParser();
+        $parser->parse($queryString);
     }
 
 
@@ -79,7 +70,9 @@ class QueryStringParserTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidFiltersKeyType($filtersKey)
     {
-        $parser = new QueryStringParser('', $filtersKey);
+        $parser = new QueryStringParser();
+        $parser->parse('',$filtersKey);
+
     }
 
     /**
@@ -88,7 +81,8 @@ class QueryStringParserTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidSortingKeyType($sortingKey)
     {
-        $parser = new QueryStringParser('', 'filter', $sortingKey);
+        $parser = new QueryStringParser();
+        $parser->parse('','filter',$sortingKey);
     }
 
 

@@ -9,120 +9,36 @@ namespace Kutjera;
 class QueryStringParser
 {
     /**
-     * @var string
-     */
-    private $queryString;
-
-    /**
-     * @var string
-     */
-    private $filtersKey;
-
-    /**
-     * @var string
-     */
-    private $sortingKey;
-
-
-    /**
      * @param string $queryString
      * @param string $filtersKey
      * @param string $sortingKey
+     * @return DataQuery
      */
-    public function __construct($queryString = '', $filtersKey = 'filter', $sortingKey = 'sort')
+    public function parse($queryString, $filtersKey = 'filter', $sortingKey = 'sort')
     {
         $this->validateQueryString($queryString);
         $this->validateFiltersKey($filtersKey);
         $this->validateSortingKey($sortingKey);
 
-        $this->queryString = trim($queryString);
-        $this->filtersKey = trim($filtersKey);
-        $this->sortingKey = trim($sortingKey);
-    }
+        $queryString = trim($queryString);
+        $filtersKey = trim($filtersKey);
+        $sortingKey = trim($sortingKey);
 
-
-    /*******************************************************************************************************************
-     * PUBLIC
-     */
-
-    public function parse()
-    {
         $filters = [];
         $sorting = [];
         $preParsed = [];
 
-        parse_str($this->queryString, $preParsed);
+        parse_str($queryString, $preParsed);
 
-        if (isset($preParsed[$this->filtersKey])) {
-            $filters = $this->parseFiltersString($preParsed[$this->filtersKey]);
+        if (isset($preParsed[$filtersKey])) {
+            $filters = $this->parseFiltersString($preParsed[$filtersKey]);
         }
 
-        if (isset($preParsed[$this->sortingKey])) {
-            $sorting = $this->parseSortingString($preParsed[$this->sortingKey]);
+        if (isset($preParsed[$sortingKey])) {
+            $sorting = $this->parseSortingString($preParsed[$sortingKey]);
         }
 
         return new DataQuery($filters, $sorting);
-    }
-
-    /**
-     * @return string
-     */
-    public function getQueryString()
-    {
-        return $this->queryString;
-    }
-
-    /**
-     * @param string $queryString
-     * @return $this
-     */
-    public function setQueryString($queryString)
-    {
-        $this->validateQueryString($queryString);
-
-        $this->queryString = trim($queryString);
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFiltersKey()
-    {
-        return $this->filtersKey;
-    }
-
-    /**
-     * @param string $filtersKey
-     * @return $this
-     */
-    public function setFiltersKey($filtersKey)
-    {
-        $this->validateFiltersKey($filtersKey);
-
-        $this->filtersKey = trim($filtersKey);
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSortingKey()
-    {
-        return $this->sortingKey;
-    }
-
-    /**
-     * @param string $sortingKey
-     * @return $this
-     */
-    public function setSortingKey($sortingKey)
-    {
-        $this->validateSortingKey($sortingKey);
-
-        $this->sortingKey = trim($sortingKey);
-        return $this;
     }
 
 

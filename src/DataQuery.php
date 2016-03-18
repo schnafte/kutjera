@@ -47,4 +47,39 @@ class DataQuery implements DataQueryInterface
     {
         return $this->sorting;
     }
+
+    /**
+     * @return array
+     */
+    public function getFiltersAsArray()
+    {
+        $filters = [];
+
+        foreach ($this->filters as $row) {
+            $filters[]= [
+                "field" => $row->getField(),
+                "operator" => $row->getOperator(),
+                "value" => $row->getValue()
+            ];
+        }
+
+        return $filters;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSortingAsArray()
+    {
+        $sorting = [];
+
+        foreach ($this->sorting as $row) {
+            $sorting[]= [
+                "field" => $row->getField(),
+                "order" => $row->getOrder()
+            ];
+        }
+
+        return $sorting;
+    }
 }

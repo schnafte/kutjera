@@ -9,6 +9,11 @@ namespace Schnafte\Kutjera;
 interface DataQueryInterface
 {
     /**
+     * @return string
+     */
+    public function getQueryString();
+
+    /**
      * @return FilterRule[]
      */
     public function getFilters();

@@ -9,10 +9,11 @@ namespace Schnafte\Kutjera;
 class QueryStringParser
 {
     /**
-     * @param string $queryString
+     * @param string|null $queryString
      * @param string $filtersKey
      * @param string $sortingKey
      * @param string $fieldsKey
+     * @param string $limitKey
      * @return DataQuery
      */
     public function parse($queryString, $filtersKey = 'filter', $sortingKey = 'sort',  $fieldsKey = 'fields', $limitKey = 'limit')
@@ -57,7 +58,7 @@ class QueryStringParser
             $limit = $this->parseLimitString($preParsed[$limitKey]);
         }
 
-        return new DataQuery($filters, $sorting, $fields, $limit);
+        return new DataQuery($queryString, $filters, $sorting, $fields, $limit);
     }
 
 

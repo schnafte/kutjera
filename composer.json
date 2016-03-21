@@ -1,11 +1,11 @@
 {
-    "name": "schnafte/kutjera",
+    "name": "Schnafte/Kutjera",
     "description": "This library provides a service to quickly search through JSON data by providing a query string. Useful for prototyping a JSON API.",
     "license": "MIT",
     "authors": [
         {
             "name": "Thomas H.",
-            "email": "thomas.hannemann@gmail.com"
+            "email": "tom@schnafte.com"
         }
     ],
     "require": {

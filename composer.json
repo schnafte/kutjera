@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Kutjera\\": "src/"
+            "Schnafte\\Kutjera\\": "src/"
         },
         "files": [
             "src/Util/functions.php"
@@ -25,7 +25,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Kutjera\\Tests\\": "tests/"
+            "Schnafte\\Kutjera\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",

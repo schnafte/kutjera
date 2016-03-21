@@ -1,5 +1,5 @@
 <?php
-namespace Kutjera\Util;
+namespace Schnafte\Kutjera\Util;
 
 use ArrayAccess;
 

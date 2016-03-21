@@ -1,5 +1,5 @@
 <?php
-namespace Kutjera\DataProvider;
+namespace Schnafte\Kutjera\DataProvider;
 
 interface DataProviderInterface
 {

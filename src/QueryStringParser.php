@@ -1,5 +1,5 @@
 <?php
-namespace Kutjera;
+namespace Schnafte\Kutjera;
 
 
 /**
@@ -17,6 +17,10 @@ class QueryStringParser
      */
     public function parse($queryString, $filtersKey = 'filter', $sortingKey = 'sort',  $fieldsKey = 'fields', $limitKey = 'limit')
     {
+        if ($queryString == null) {
+            return new DataQuery($queryString);
+        }
+
         $this->validateQueryString($queryString);
         $this->validateFiltersKey($filtersKey);
         $this->validateSortingKey($sortingKey);

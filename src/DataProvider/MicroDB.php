@@ -1,5 +1,5 @@
 <?php
-namespace Kutjera\DataProvider;
+namespace Schnafte\Kutjera\DataProvider;
 
 use MicroDB\Database;
 
@@ -17,7 +17,9 @@ class MicroDB implements DataProviderInterface
      */
     public function __construct(array $resourceToPathMappings)
     {
-        $this->resourceToPathMappings = $resourceToPathMappings;
+        foreach ($resourceToPathMappings as $mapping) {
+            $this->resourceToPathMappings[$mapping['name']] = $mapping['path'];
+        }
     }
 
 

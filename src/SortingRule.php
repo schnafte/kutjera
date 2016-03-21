@@ -1,5 +1,5 @@
 <?php
-namespace Kutjera;
+namespace Schnafte\Kutjera;
 
 /**
  * Class SortingRule

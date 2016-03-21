@@ -1,9 +1,9 @@
 <?php
-namespace Kutjera\Tests;
+namespace Schnafte\Kutjera\Tests;
 
 use InvalidArgumentException;
-use Kutjera\DataQueryInterface;
-use Kutjera\QueryStringParser;
+use Schnafte\Kutjera\DataQueryInterface;
+use Schnafte\Kutjera\QueryStringParser;
 use PHPUnit_Framework_TestCase;
 
 class QueryStringParserTest extends PHPUnit_Framework_TestCase

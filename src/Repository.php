@@ -1,8 +1,8 @@
 <?php
-namespace Kutjera;
+namespace Schnafte\Kutjera;
 
-use Kutjera\DataProvider\DataProviderInterface;
-use Kutjera\Util\ArrayHelper;
+use Schnafte\Kutjera\DataProvider\DataProviderInterface;
+use Schnafte\Kutjera\Util\ArrayHelper;
 
 /**
  *

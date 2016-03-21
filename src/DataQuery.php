@@ -1,5 +1,5 @@
 <?php
-namespace Kutjera;
+namespace Schnafte\Kutjera;
 
 
 /**
@@ -8,6 +8,11 @@ namespace Kutjera;
  */
 class DataQuery implements DataQueryInterface
 {
+    /**
+     * @var string
+     */
+    private $queryString;
+
     /**
      * @var FilterRule[]
      */
@@ -30,8 +35,9 @@ class DataQuery implements DataQueryInterface
 
 
 
-    public function __construct(array $filters, array $sorting, array $fields, LimitRule $limit = null)
+    public function __construct($queryString, array $filters = [], array $sorting = [], array $fields = [], LimitRule $limit = null)
     {
+        $this->queryString = $queryString;
         $this->filters = $filters;
         $this->sorting = $sorting;
         $this->fields = $fields;
@@ -43,6 +49,14 @@ class DataQuery implements DataQueryInterface
      * PUBLIC
      */
 
+
+    /**
+     * @return string
+     */
+    public function getQueryString()
+    {
+        return $this->queryString;
+    }
 
     /**
      * @return array

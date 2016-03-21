@@ -18,12 +18,24 @@ class DataQuery implements DataQueryInterface
      */
     private $sorting;
 
+    /**
+     * @var array
+     */
+    private $fields;
+
+    /**
+     * @var LimitRule
+     */
+    private $limit;
 
 
-    public function __construct(array $filters, array $sorting)
+
+    public function __construct(array $filters, array $sorting, array $fields, LimitRule $limit = null)
     {
         $this->filters = $filters;
         $this->sorting = $sorting;
+        $this->fields = $fields;
+        $this->limit = $limit;
     }
 
 
@@ -47,6 +59,24 @@ class DataQuery implements DataQueryInterface
     {
         return $this->sorting;
     }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @return LimitRule
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+
 
     /**
      * @return array
@@ -81,5 +111,26 @@ class DataQuery implements DataQueryInterface
         }
 
         return $sorting;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getFieldsAsArray()
+    {
+        return $this->fields;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getLimitAsArray()
+    {
+        return [
+            "count" => $this->limit->getCount(),
+            "offset" => $this->limit->getOffset()
+        ];
     }
 }

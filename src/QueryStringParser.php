@@ -12,20 +12,27 @@ class QueryStringParser
      * @param string $queryString
      * @param string $filtersKey
      * @param string $sortingKey
+     * @param string $fieldsKey
      * @return DataQuery
      */
-    public function parse($queryString, $filtersKey = 'filter', $sortingKey = 'sort')
+    public function parse($queryString, $filtersKey = 'filter', $sortingKey = 'sort',  $fieldsKey = 'fields', $limitKey = 'limit')
     {
         $this->validateQueryString($queryString);
         $this->validateFiltersKey($filtersKey);
         $this->validateSortingKey($sortingKey);
+        $this->validateFieldsKey($fieldsKey);
+        $this->validateLimitKey($limitKey);
 
         $queryString = trim($queryString);
         $filtersKey = trim($filtersKey);
         $sortingKey = trim($sortingKey);
+        $fieldsKey = trim($fieldsKey);
+        $limitKey = trim($limitKey);
 
         $filters = [];
         $sorting = [];
+        $fields = [];
+        $limit = new LimitRule();
         $preParsed = [];
 
         parse_str($queryString, $preParsed);
@@ -38,7 +45,15 @@ class QueryStringParser
             $sorting = $this->parseSortingString($preParsed[$sortingKey]);
         }
 
-        return new DataQuery($filters, $sorting);
+        if (isset($preParsed[$fieldsKey])) {
+            $fields = $this->parseFieldsString($preParsed[$fieldsKey]);
+        }
+
+        if (isset($preParsed[$limitKey])) {
+            $limit = $this->parseLimitString($preParsed[$limitKey]);
+        }
+
+        return new DataQuery($filters, $sorting, $fields, $limit);
     }
 
 
@@ -117,6 +132,36 @@ class QueryStringParser
 
 
     /**
+     * @param $queryString
+     * @return array
+     */
+    protected function parseFieldsString($queryString)
+    {
+        return explode(',', $queryString);
+    }
+
+
+    /**
+     * @param $queryString
+     * @return array
+     */
+    protected function parseLimitString($queryString)
+    {
+        $parts =  explode(',', $queryString);
+        $limit = 0;
+        $offset = 0;
+
+        if (sizeof($parts) == 1) {
+            $limit = intval($parts[0]);
+        } else {
+            $limit = intval($parts[0]);
+            $offset = intval($parts[1]);
+        }
+
+        return new LimitRule($limit, $offset);
+    }
+
+    /**
      * @param $op
      * @return bool
      */
@@ -176,6 +221,32 @@ class QueryStringParser
     {
         if (!is_string($sortingKey) || is_numeric($sortingKey) || is_null($sortingKey) || empty(($sortingKey)) ) {
             throw new \InvalidArgumentException('The $sortingKey parameter has to be of type string and must not be empty');
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $fieldsKey
+     * @return bool
+     */
+    protected function validateFieldsKey($fieldsKey)
+    {
+        if (!is_string($fieldsKey) || is_numeric($fieldsKey) || is_null($fieldsKey) || empty(($fieldsKey)) ) {
+            throw new \InvalidArgumentException('The $fieldsKey parameter has to be of type string and must not be empty');
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $limitKey
+     * @return bool
+     */
+    protected function validateLimitKey($limitKey)
+    {
+        if (!is_string($limitKey) || is_numeric($limitKey) || is_null($limitKey) || empty(($limitKey)) ) {
+            throw new \InvalidArgumentException('The $limitKey parameter has to be of type string and must not be empty');
         }
 
         return true;

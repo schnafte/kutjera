@@ -9,12 +9,22 @@ namespace Kutjera;
 interface DataQueryInterface
 {
     /**
-     * @return array
+     * @return FilterRule[]
      */
     public function getFilters();
 
     /**
-     * @return array
+     * @return SortingRule[]
      */
     public function getSorting();
+
+    /**
+     * @return array
+     */
+    public function getFields();
+
+    /**
+     * @return LimitRule
+     */
+    public function getLimit();
 }

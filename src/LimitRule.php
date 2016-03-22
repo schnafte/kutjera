@@ -47,7 +47,7 @@ class LimitRule
     /**
      * @return bool
      */
-    public function isDefined()
+    public function isRestricted()
     {
         return $this->offset != 0 || $this->count != 0;
     }

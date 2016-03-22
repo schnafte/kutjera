@@ -58,6 +58,8 @@ class Repository
      */
     protected function processResult(array $rs, DataQueryInterface $query)
     {
+        $rs = array_values($rs);
+
         if (sizeof($query->getFilters()) > 0) {
             $rs = $this->filter($rs, $query->getFilters());
         }
@@ -66,7 +68,7 @@ class Repository
             $rs = $this->sort($rs, $query->getSorting());
         }
 
-        if ($query->getLimit()->isDefined()) {
+        if ($query->getLimit()->isRestricted()) {
             $rs = $this->limit($rs, $query->getLimit());
         }
 

@@ -18,8 +18,13 @@ class QueryStringParser
      */
     public function parse($queryString, $filtersKey = 'filter', $sortingKey = 'sort',  $fieldsKey = 'fields', $limitKey = 'limit')
     {
+        $filters = [];
+        $sorting = [];
+        $fields = [];
+        $limit = new LimitRule();
+
         if ($queryString == null) {
-            return new DataQuery($queryString);
+            return new DataQuery($queryString, $filters, $sorting, $fields, $limit);
         }
 
         $this->validateQueryString($queryString);
@@ -34,10 +39,7 @@ class QueryStringParser
         $fieldsKey = trim($fieldsKey);
         $limitKey = trim($limitKey);
 
-        $filters = [];
-        $sorting = [];
-        $fields = [];
-        $limit = new LimitRule();
+
         $preParsed = [];
 
         parse_str($queryString, $preParsed);
